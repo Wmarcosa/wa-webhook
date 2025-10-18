@@ -1,7 +1,21 @@
+# Imagem base
 FROM node:18
+
+# Diretório de trabalho
 WORKDIR /usr/src/app
+
+# Copia somente os manifests primeiro (melhora cache)
 COPY package*.json ./
-RUN npm ci --only=production
+
+# Instala dependências de produção (sem exigir package-lock)
+RUN npm install --omit=dev
+
+# Copia o restante do código
 COPY . .
+
+# Porta padrão do Cloud Run
+ENV PORT=8080
 EXPOSE 8080
-CMD ["npm", "start"]
+
+# Comando de inicialização
+CMD ["node", "server.js"]
