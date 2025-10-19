@@ -5,7 +5,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Token de verificação (ajuste no Cloud Run em Variáveis e secrets se quiser)
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'reality_whats_2025';
+const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2025';
 
 // Health check simples (GET /)
 app.get('/', (_req, res) => res.status(200).send('ok'));
