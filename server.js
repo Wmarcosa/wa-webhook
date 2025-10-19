@@ -4,15 +4,13 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-// Token do Webhook (o mesmo que no Meta)
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2025';
+// Token de verificação (ajuste no Cloud Run em Variáveis e secrets se quiser)
+const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'reality_whats_2025';
 
-// Rota de teste (saúde do container)
-app.get('/', (req, res) => {
-  res.send('ok');
-});
+// Health check simples (GET /)
+app.get('/', (_req, res) => res.status(200).send('ok'));
 
-// Verificação do webhook
+// Verificação do webhook (GET /webhook)
 app.get('/webhook', (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
@@ -22,17 +20,16 @@ app.get('/webhook', (req, res) => {
     console.log('WEBHOOK_VERIFIED');
     return res.status(200).send(challenge);
   }
-
   return res.sendStatus(403);
 });
 
-// Recebimento de eventos
+// Recebimento de eventos (POST /webhook)
 app.post('/webhook', (req, res) => {
   console.log('Evento recebido:', JSON.stringify(req.body, null, 2));
   res.sendStatus(200);
 });
 
-// Porta obrigatória do Cloud Run
+// Cloud Run: escutar em process.env.PORT e em 0.0.0.0
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(Servidor ouvindo na porta ${PORT});
