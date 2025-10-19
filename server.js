@@ -5,7 +5,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Token de verificação do Webhook (pode vir de variável de ambiente)
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2035';
+const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2025';
 
 // Health check (GET /) – útil para testar no navegador
 app.get('/', (_req, res) => res.status(200).send('ok'));
