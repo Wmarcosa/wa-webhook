@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const app = express();
 app.use(bodyParser.json());
 
-// Token de verificação (ajuste no Cloud Run em Variáveis e secrets se quiser)
-const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2025';
+// Token de verificação do Webhook (pode vir de variável de ambiente)
+const VERIFY_TOKEN = process.env.WHATSAPP_VERIFY_TOKEN || 'realcity_whats_2035';
 
-// Health check simples (GET /)
+// Health check (GET /) – útil para testar no navegador
 app.get('/', (_req, res) => res.status(200).send('ok'));
 
 // Verificação do webhook (GET /webhook)
@@ -29,7 +29,7 @@ app.post('/webhook', (req, res) => {
   res.sendStatus(200);
 });
 
-// Cloud Run: escutar em process.env.PORT e em 0.0.0.0
+// Cloud Run: precisa escutar process.env.PORT, host 0.0.0.0
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(Servidor ouvindo na porta ${PORT});
