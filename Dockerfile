@@ -3,7 +3,6 @@ FROM node:18
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-
 RUN npm install --omit=dev
 
 COPY . .
@@ -11,4 +10,4 @@ COPY . .
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
